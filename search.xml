@@ -4,13 +4,54 @@
   
     
     <entry>
-      <title>香港旅行游记</title>
+      <title>Markdown 教程</title>
+      <link href="/2023/06/28/markdown-tutorial/"/>
+      <url>/2023/06/28/markdown-tutorial/</url>
+      
+        <content type="html"><![CDATA[<p>我发现，Markdown语法不难，但学了好几遍都记不住，原因就是学了却没有去使用它；好在我搭建了自己的博客，后面使用Markdown的机会更多了，相信之后一定会记住的！</p><p>本文不会教你Markdown的语法知识，只作为自检使用；当你能用自己的话回顾完下述知识点时，代表你已经完全掌握Markdown的基本语法啦~</p><p>若不会，请查看教程：<a href="https://blog.csdn.net/weixin_43863919/article/details/124648510">我是教程，点我</a></p><h3 id="请回答以下知识点"><a href="#请回答以下知识点" class="headerlink" title="请回答以下知识点"></a>请回答以下知识点</h3><ol><li>换行</li><li>标题分级</li><li>分割线</li><li>斜体、粗体、删除线</li><li>超链接、自动超链接</li><li>插入图片、带有链接的图片</li><li>无序列表、有序列表、列表嵌套</li><li>文字引用</li><li>行内代码块、代码块</li><li>表格、数学公式</li><li>待办事项、脚注、HTML</li></ol><p>相关资料：<br>    - <a href="https://tableconvert.com/markdown-to-markdown">用Markdown快速制作表格</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 教程 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Markdown </tag>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>2023年6月18日 - 香港旅行游记</title>
       <link href="/2023/06/28/HongKong-trip/"/>
       <url>/2023/06/28/HongKong-trip/</url>
       
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[<p>写点啥吧</p>]]></content>
       
       
+      <categories>
+          
+          <category> 游记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 香港 </tag>
+            
+            <tag> 旅行 </tag>
+            
+        </tags>
       
     </entry>
     
