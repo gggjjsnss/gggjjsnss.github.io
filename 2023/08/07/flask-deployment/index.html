@@ -1,0 +1,264 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>How to use Flask in production environment | Orange's Blog</title><meta name="author" content="Orange"><meta name="copyright" content="Orange"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="In this tutorial, I will teach you how to deploy Falsk app in prodcution environment. Falsk is a Web framework that can be used to build a website or interface. When run Flask app directly, we always">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to use Flask in production environment">
+<meta property="og:url" content="https://cinderellacc.github.io/en/2023/08/07/flask-deployment/index.html">
+<meta property="og:site_name" content="Orange&#39;s Blog">
+<meta property="og:description" content="In this tutorial, I will teach you how to deploy Falsk app in prodcution environment. Falsk is a Web framework that can be used to build a website or interface. When run Flask app directly, we always">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cinderellacc.github.io/en/img/landscape.png">
+<meta property="article:published_time" content="2023-08-07T06:14:01.000Z">
+<meta property="article:modified_time" content="2023-08-07T07:02:48.790Z">
+<meta property="article:author" content="Orange">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cinderellacc.github.io/en/img/landscape.png"><link rel="shortcut icon" href="/en/img/favicon.png"><link rel="canonical" href="https://cinderellacc.github.io/en/2023/08/07/flask-deployment/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/en/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/en/',
+  algolia: undefined,
+  localSearch: {"path":"/en/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: 'days',
+  dateSuffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"Author: Orange","link":"Link: ","source":"Source: Orange's Blog","info":"Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source."}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'How to use Flask in production environment',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-08-07 15:02:48'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css" /><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (false) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/en/img/favicon.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/en/archives/"><div class="headline">Articles</div><div class="length-num">2</div></a><a href="/en/tags/"><div class="headline">Tags</div><div class="length-num">1</div></a><a href="/en/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/en/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/en/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/en/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/en/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/en/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="https://cinderellacc.github.io/"><i class="fa-fw fa fa-globe"></i><span> 中文博客</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/en/img/landscape.png')"><nav id="nav"><span id="blog-info"><a href="/en/" title="Orange's Blog"><span class="site-name">Orange's Blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/en/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/en/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/en/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/en/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/en/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="https://cinderellacc.github.io/"><i class="fa-fw fa fa-globe"></i><span> 中文博客</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">How to use Flask in production environment</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-08-07T06:14:01.000Z" title="Created 2023-08-07 14:14:01">2023-08-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-08-07T07:02:48.790Z" title="Updated 2023-08-07 15:02:48">2023-08-07</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="How to use Flask in production environment"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>In this tutorial, I will teach you how to deploy Falsk app in prodcution environment. Falsk is a Web framework that can be used to build a website or interface.</p>
+<p>When run Flask app directly, we always see the following warning.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.</span><br></pre></td></tr></table></figure>
+
+<p>This message warns us not to use Falsk in production enviroment, as most services needs to process requests parallelly while running Falsk directly can’t support parallel processing. To address this issue, we need to use <code>wsgi server</code>. </p>
+<p>In this blog, I will show you using <code>gunicorn</code> to build <code>wsgi server</code> and provide generic code example for you.</p>
+<h1 id="Set-up-environment"><a href="#Set-up-environment" class="headerlink" title="Set up environment"></a>Set up environment</h1><p>First, download the required python libraries.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install gunicorn</span><br><span class="line">pip install gevent</span><br></pre></td></tr></table></figure>
+<p>Then, run the following code to check if it is avaliable.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gunicorn -v</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">output: gunicorn (version 21.2.0)</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Deploy-Flask-service-using-gunicorn"><a href="#Deploy-Flask-service-using-gunicorn" class="headerlink" title="Deploy Flask service using gunicorn"></a>Deploy Flask service using gunicorn</h1><p>Now, you can write your flask code for processing users’ requests. </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request, jsonify</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/test&#x27;</span>, methods=[<span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test</span>():</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;<span class="string">&#x27;status&#x27;</span>: <span class="string">&#x27;success&#x27;</span>, <span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;ok&#x27;</span>&#125;)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;<span class="string">&#x27;status&#x27;</span>: <span class="string">&#x27;error&#x27;</span>, <span class="string">&#x27;message&#x27;</span>: <span class="built_in">str</span>(e)&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(host=<span class="string">&#x27;0.0.0.0&#x27;</span>, port=<span class="number">8124</span>)</span><br></pre></td></tr></table></figure>
+
+<p>I recommend using configuration file to provide neccessary parameters for gunicorn. So, let’s create a configuration file named <code>gunicorn_conf.py</code>. In this file, you can specify the corresponding settings.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># This is a gunicorn config file, which is used to start the server.</span></span><br><span class="line"></span><br><span class="line">preload_app = <span class="literal">False</span> <span class="comment"># Setting preload_app to False will disable this behaviour, and will result in each worker loading the application code when it starts.</span></span><br><span class="line">workers = <span class="number">3</span> <span class="comment"># The number of worker processes for handling requests.</span></span><br><span class="line">bind = <span class="string">&#x27;0.0.0.0:8123&#x27;</span> <span class="comment"># The socket to bind.</span></span><br><span class="line">worker_class = <span class="string">&#x27;gevent&#x27;</span> <span class="comment"># The type of workers to use.</span></span><br><span class="line"><span class="comment"># threads = 6 # The number of worker threads for handling requests.</span></span><br><span class="line">backlog = <span class="number">3</span> <span class="comment"># The maximum number of pending connections.</span></span><br><span class="line">worker_connections = <span class="number">10</span> <span class="comment"># The maximum number of simultaneous clients.</span></span><br><span class="line">accesslog = <span class="string">&#x27;logs/access.log&#x27;</span> <span class="comment"># The Access log file to write to.</span></span><br><span class="line">access_log_format = <span class="string">&#x27;%(h)s %(t)s %(U)s %(q)s&#x27;</span> <span class="comment"># The access log format.</span></span><br><span class="line">debug = <span class="literal">True</span> <span class="comment"># Debug mode.</span></span><br><span class="line">proc_name = <span class="string">&#x27;gunicorn.pid&#x27;</span> <span class="comment"># A base to use with setproctitle for process naming.</span></span><br><span class="line">pidfile = <span class="string">&#x27;logs/gunicorn.pid&#x27;</span> <span class="comment"># A filename to use for the PID file.</span></span><br><span class="line">timeout = <span class="number">300</span> <span class="comment"># Workers silent for more than this many seconds are killed and restarted.</span></span><br></pre></td></tr></table></figure>
+<p>Of course, you should change these settings correspondingly.</p>
+<p>Now, you can create another shell file to help you start the gunicorn server. Here I will provide you a example named <code>process.sh</code>.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">activate python environment</span></span><br><span class="line">export PATH=/data/XXX/anaconda3/envs/python37/bin:$PATH</span><br><span class="line">source ~/.bashrc</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">This is a shell script <span class="keyword">for</span> starting or stopping python program</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">receive one parameter, start or stop</span></span><br><span class="line"></span><br><span class="line">if [ $# -lt 1 ]                   # if the number of parameters is less than 1</span><br><span class="line">then</span><br><span class="line">    echo $0&quot; &lt;start|stop|restart&gt;&quot; # print the usage</span><br><span class="line">    exit                           # exit</span><br><span class="line">else</span><br><span class="line">    command=$1                    # otherwise, get the first parameter</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">basepath=$(cd `dirname $0`; pwd)  # obtain the absolute path of this shell script</span><br><span class="line">PID=$basepath&quot;/logs/gunicorn.pid&quot; # this is the PID file path of gunicorn</span><br><span class="line"></span><br><span class="line">if [ $command == &quot;start&quot; ]; then  # if the first parameter is start</span><br><span class="line">    if [ -e $PID ]; then          # if PID file already exists</span><br><span class="line">        echo &quot;ERROR: process aready start, if you want to restart, please first stop process&quot; # print error message</span><br><span class="line">    else                          # else</span><br><span class="line">        gunicorn -c gunicorn_conf.py clustered_topic_interface:app  &gt; logs/runlog.txt 2&gt;&amp;1 &amp; # luanched gunicorn ***</span><br><span class="line">        echo &quot;start success&quot;      # print success message</span><br><span class="line">    fi</span><br><span class="line">elif [ $command == &quot;stop&quot; ]; then # if the first parameter is stop</span><br><span class="line">    if [ ! -e $PID ]; then        # if PID file does not exist</span><br><span class="line">        echo &quot;please start before stop&quot; # print error message</span><br><span class="line">    else                          # else</span><br><span class="line">        kill -9 $(cat $&#123;PID&#125;)     # kill the process</span><br><span class="line">        echo &quot;stop $(cat $&#123;PID&#125;) success&quot; # print success message</span><br><span class="line">        rm $PID                   # remove the PID file</span><br><span class="line">    fi</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<p>Now, run the <code>process.sh</code> file to start the flask services. That’s all!</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://cinderellacc.github.io/en">Orange</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://cinderellacc.github.io/en/2023/08/07/flask-deployment/">https://cinderellacc.github.io/en/2023/08/07/flask-deployment/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/en/img/landscape.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/en/2023/07/20/my-first-english-blog/" title="Welcome to my English blog"><img class="cover" src="/en/img/landscape.png" onerror="onerror=null;src='/en/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Welcome to my English blog</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comment</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/en/img/favicon.png" onerror="this.onerror=null;this.src='/en/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Orange</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/en/archives/"><div class="headline">Articles</div><div class="length-num">2</div></a><a href="/en/tags/"><div class="headline">Tags</div><div class="length-num">1</div></a><a href="/en/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/CinderellaCc" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:984964145@11.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">A website for sharing knowledge and technology.</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Set-up-environment"><span class="toc-number">1.</span> <span class="toc-text">Set up environment</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Deploy-Flask-service-using-gunicorn"><span class="toc-number">2.</span> <span class="toc-text">Deploy Flask service using gunicorn</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/en/2023/08/07/flask-deployment/" title="How to use Flask in production environment"><img src="/en/img/landscape.png" onerror="this.onerror=null;this.src='/en/img/404.jpg'" alt="How to use Flask in production environment"/></a><div class="content"><a class="title" href="/en/2023/08/07/flask-deployment/" title="How to use Flask in production environment">How to use Flask in production environment</a><time datetime="2023-08-07T06:14:01.000Z" title="Created 2023-08-07 14:14:01">2023-08-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/en/2023/07/20/my-first-english-blog/" title="Welcome to my English blog"><img src="/en/img/landscape.png" onerror="this.onerror=null;this.src='/en/img/404.jpg'" alt="Welcome to my English blog"/></a><div class="content"><a class="title" href="/en/2023/07/20/my-first-english-blog/" title="Welcome to my English blog">Welcome to my English blog</a><time datetime="2023-07-20T10:31:53.000Z" title="Created 2023-07-20 18:31:53">2023-07-20</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/en/img/landscape.png')"><div id="footer-wrap"><div class="copyright">&copy;2023 By Orange</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll To Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/en/js/utils.js"></script><script src="/en/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>function loadWaline () {
+  function initWaline () {
+    const waline = Waline.init(Object.assign({
+      el: '#waline-wrap',
+      serverURL: 'https://blog-comment-ocrmh8jj9-cinderellacc.vercel.app/',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      path: window.location.pathname,
+      comment: false,
+    }, {"placeholder":"我从山中来","requiredFields":["nick","mail"]}))
+  }
+
+  if (typeof Waline === 'object') initWaline()
+  else {
+    getCSS('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.css').then(() => {
+      getScript('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.js').then(initWaline)
+    })
+  }
+}
+
+if ('Waline' === 'Waline' || !true) {
+  if (true) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+  else setTimeout(loadWaline, 0)
+} else {
+  function loadOtherComment () {
+    loadWaline()
+  }
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/en/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_clock_anzhiyu_injector_config(){
+    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
+    console.log('已挂载butterfly_clock_anzhiyu')
+    if(parent_div_git) {
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var qweather_key = 'b16a1fa0e63c46a4b8f28abfb06ae3fe';
+  var gaud_map_key = 'e2b04289e870b005374ee030148d64fd&s=rsv3';
+  var baidu_ak_key = 'undefined';
+  var flag = 0;
+  var clock_rectangle = '112.982279,28.19409';
+  var clock_default_rectangle_enable = 'false';
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  </script><script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><!-- hexo injector body_end end --></body></html>
